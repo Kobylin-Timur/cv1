@@ -1,16 +1,887 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тимур Кобылин — Сетевой инженер | Резюме</title>
-    <meta name="description" content="Резюме Тимура Кобылина — сетевой инженер, системный администратор. Опыт работы 5+ лет." />
+    <meta name="description" content="Резюме Тимура Кобылина — сетевой инженер, системный администратор. Опыт работы 5+ лет.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --border: #334155;
+            --gradient-start: #3b82f6;
+            --gradient-end: #8b5cf6;
+        }
+
+        .light {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent: #2563eb;
+            --accent-light: #3b82f6;
+            --border: #e2e8f0;
+            --gradient-start: #2563eb;
+            --gradient-end: #7c3aed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Background decoration */
+        .bg-decoration {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* Section heading */
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .section-heading .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            font-size: 1.2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* Contact links */
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .contact-link .label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .contact-link .value {
+            font-weight: 500;
+        }
+
+        .contact-link .emoji {
+            font-size: 1.25rem;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-badge:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .skill-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border);
+            transition: border-color 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            border-left-color: var(--accent);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 24px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+        }
+
+        .job-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .job-header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .job-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .job-company {
+            font-weight: 400;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .job-date {
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-light);
+            white-space: nowrap;
+        }
+
+        .job-position {
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        .job-tasks {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .job-tasks li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .job-tasks li .dot {
+            color: #60a5fa;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .achievement {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .achievement p {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #4ade80;
+        }
+
+        /* Education */
+        .education-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .education-item .emoji {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .education-item h3 {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .education-item .school {
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: var(--accent-light);
+        }
+
+        .education-item .program {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .education-item .year {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Current work */
+        .current-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .current-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .current-list .number {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        .footer p {
+            font-size: 0.875rem;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Section spacing */
+        section {
+            margin-bottom: 2.5rem;
+        }
+
+        /* Print */
+        @media print {
+            .theme-toggle, .bg-decoration { display: none !important; }
+            body { background: white; color: black; }
+            .card { border: 1px solid #ddd; break-inside: avoid; }
+            .card:hover { transform: none; box-shadow: none; }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .header h1 { font-size: 1.75rem; }
+            .header .subtitle { font-size: 1rem; }
+            .container { padding: 1.5rem 1rem; }
+            .card { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+
+    <button class="theme-toggle" id="themeToggle" title="Переключить тему">☀️</button>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header animate-fade-in-up">
+            <div class="avatar">👋</div>
+            <h1><span class="gradient-text">Тимур Кобылин</span></h1>
+            <p class="subtitle">🚀 Сетевой инженер | Системный администратор</p>
+            <div class="badges">
+                <span class="badge">📍 Верхняя Пышма / Екатеринбург</span>
+                <span class="badge">💼 Full-time / Hybrid / Remote</span>
+                <span class="badge">💰 от 110 000 ₽</span>
+            </div>
+        </header>
+
+        <!-- Contacts -->
+        <section class="animate-fade-in-up delay-100">
+            <div class="section-heading">
+                <span class="icon">📞</span>
+                <span>Контакты</span>
+            </div>
+            <div class="contacts-grid">
+                <a href="mailto:kobylin.timur@gmail.com" class="contact-link">
+                    <span class="emoji">📧</span>
+                    <div>
+                        <div class="label">Email</div>
+                        <div class="value">kobylin.timur@gmail.com</div>
+                    </div>
+                </a>
+                <a href="https://t.me/kobylin_t" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <span class="emoji">💬</span>
+                    <div>
+                        <div class="label">Telegram (предпочтительно)</div>
+                        <div class="value">@kobylin_t</div>
+                    </div>
+                </a>
+                <a href="tel:+79655079377" class="contact-link">
+                    <span class="emoji">📱</span>
+                    <div>
+                        <div class="label">Телефон</div>
+                        <div class="value">+7 (965) 507-93-77</div>
+                    </div>
+                </a>
+                <div class="contact-link" style="cursor: default;">
+                    <span class="emoji">🚗</span>
+                    <div>
+                        <div class="label">Авто</div>
+                        <div class="value">Права кат. B, личный авто</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="animate-fade-in-up delay-200">
+            <div class="section-heading">
+                <span class="icon">📌</span>
+                <span>Обо мне</span>
+            </div>
+            <div class="card">
+                <p style="color: var(--text-secondary); font-size: 0.9375rem;">
+                    Опытный сетевой инженер с практическими навыками администрирования инфраструктуры и управления командами. 
+                    Имею успешный опыт развёртывания ЦОД, настройки сетевого оборудования L2–L3 и сопровождения монтажных работ. 
+                    Умею эффективно решать инциденты, оптимизировать процессы и координировать работу групп специалистов. 
+                    Стремлюсь к развитию в области сетевой инфраструктуры, готов применять знания для повышения надёжности 
+                    и производительности ИТ-систем.
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="animate-fade-in-up delay-300">
+            <div class="section-heading">
+                <span class="icon">🛠</span>
+                <span>Технические навыки</span>
+            </div>
+
+            <div class="skills-grid">
+                <div class="card skill-category">
+                    <h3><span style="color: #60a5fa;">🌐</span> Сети и инфраструктура</h3>
+                    <div class="skill-badges">
+                        <span class="skill-badge">Маршрутизация L2-L3</span>
+                        <span class="skill-badge">СКС</span>
+                        <span class="skill-badge">Wi-Fi / BYOD</span>
+                        <span class="skill-badge">Тестирование ПО</span>
+                        <span class="skill-badge">Huawei</span>
+                        <span class="skill-badge">Cisco</span>
+                    </div>
+                </div>
+
+                <div class="card skill-category">
+                    <h3><span style="color: #4ade80;">⚙️</span> Системное администрирование</h3>
+                    <div class="skill-badges">
+                        <span class="skill-badge">Active Directory</span>
+                        <span class="skill-badge">MS Exchange</span>
+                        <span class="skill-badge">Почтовые серверы</span>
+                        <span class="skill-badge">Админ. ЛВС</span>
+                        <span class="skill-badge">Диагностика</span>
+                        <span class="skill-badge">Логи</span>
+                    </div>
+                </div>
+
+                <div class="card skill-category">
+                    <h3><span style="color: #c084fc;">💻</span> Разработка и БД</h3>
+                    <div class="skill-badges">
+                        <span class="skill-badge">Git</span>
+                        <span class="skill-badge">SQL</span>
+                        <span class="skill-badge">HTML / CSS</span>
+                        <span class="skill-badge">JavaScript</span>
+                        <span class="skill-badge">Автоматизация</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card skill-category">
+                <h3><span style="color: #facc15;">🤝</span> Soft Skills</h3>
+                <div class="skill-badges">
+                    <span class="skill-badge">Управление командой</span>
+                    <span class="skill-badge">Деловая коммуникация</span>
+                    <span class="skill-badge">Работа с подрядчиками</span>
+                    <span class="skill-badge">Стрессоустойчивость</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="animate-fade-in-up delay-400">
+            <div class="section-heading">
+                <span class="icon">💼</span>
+                <span>Опыт работы <span style="font-size: 0.875rem; font-weight: 400; color: var(--text-secondary);">(5 лет 3 месяца)</span></span>
+            </div>
+
+            <div class="timeline">
+                <!-- Job 1 -->
+                <div class="timeline-item">
+                    <div class="card">
+                        <div class="job-header">
+                            <h3 class="job-title">🏢 РДП.РУ <span class="job-company">(Москва)</span></h3>
+                            <span class="job-date">Март 2026 — Настоящее время</span>
+                        </div>
+                        <p class="job-position">Сетевой инженер-тестировщик</p>
+                        <ul class="job-tasks">
+                            <li><span class="dot">•</span>Интеграционное тестирование программного обеспечения сетевого оборудования.</li>
+                            <li><span class="dot">•</span>Выявление и документирование багов на ранних этапах разработки ПО.</li>
+                            <li><span class="dot">•</span>Проведение тестирований по тестовым сценариям и тест-кейсам.</li>
+                            <li><span class="dot">•</span>Составление подробных отчетов о результатах тестирования.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="timeline-item">
+                    <div class="card">
+                        <div class="job-header">
+                            <h3 class="job-title">🏢 ИТ-Элемент <span class="job-company">(Екатеринбург)</span></h3>
+                            <span class="job-date">Март 2024 — Март 2026</span>
+                        </div>
+                        <p class="job-position">Ведущий специалист отдела ИТ</p>
+                        <ul class="job-tasks">
+                            <li><span class="dot">•</span>Администрирование ЛВС, Active Directory и MS Exchange.</li>
+                        </ul>
+                        <div class="achievement">
+                            <p>🏆 Достижения: Полностью актуализировал документацию по сетевой инфраструктуре организации. Организовал выделенные Wi-Fi сети для спецзадач, включая внедрение системы BYOD.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job 3 -->
+                <div class="timeline-item">
+                    <div class="card">
+                        <div class="job-header">
+                            <h3 class="job-title">🏢 Сбер <span class="job-company">(Екатеринбург)</span></h3>
+                            <span class="job-date">Март 2022 — Сентябрь 2023</span>
+                        </div>
+                        <p class="job-position">Старший инженер</p>
+                        <ul class="job-tasks">
+                            <li><span class="dot">•</span>Настройка, диагностика и анализ работы сетевого оборудования L2–L3.</li>
+                            <li><span class="dot">•</span>Устранение сетевых инцидентов, работа с логами и оборудованием.</li>
+                            <li><span class="dot">•</span>Контроль подрядчиков, организация монтажных работ и замена оборудования.</li>
+                        </ul>
+                        <div class="achievement">
+                            <p>🏆 Достижения: Успешно и в сжатые сроки развернул ЦОД. Участвовал в развёртывании сетевой инфраструктуры на стендах «Иннопрома». Провел модернизацию инфраструктуры (миграция с Cisco на Huawei).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job 4 -->
+                <div class="timeline-item">
+                    <div class="card">
+                        <div class="job-header">
+                            <h3 class="job-title">🏢 ООО "Миралоджик СМ" <span class="job-company">(Екатеринбург)</span></h3>
+                            <span class="job-date">Март 2021 — Март 2022</span>
+                        </div>
+                        <p class="job-position">Инженер технической поддержки</p>
+                        <ul class="job-tasks">
+                            <li><span class="dot">•</span>Поддержка, диагностика и устранение неисправностей клиентских сервисов (интернет, ТВ, приложения, оборудование).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="animate-fade-in-up delay-500">
+            <div class="section-heading">
+                <span class="icon">🎓</span>
+                <span>Образование</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="card">
+                    <div class="education-item">
+                        <span class="emoji">🎓</span>
+                        <div>
+                            <h3>Высшее (в процессе)</h3>
+                            <p class="school">Уральский государственный экономический университет (УрГЭУ), Екатеринбург</p>
+                            <p class="program">📌 Программное обеспечение вычислительной техники и автоматизированных систем</p>
+                            <p class="year">Ожидаемый выпуск: 2027</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="education-item">
+                        <span class="emoji">🎓</span>
+                        <div>
+                            <h3>Среднее специальное</h3>
+                            <p class="school">Екатеринбургский экономико-технологический колледж</p>
+                            <p class="program">📌 Техник по компьютерным системам и комплексам</p>
+                            <p class="year">Выпуск: 2020</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Currently working on -->
+        <section class="animate-fade-in-up delay-600">
+            <div class="section-heading">
+                <span class="icon">⚙️</span>
+                <span>Сейчас я работаю над</span>
+            </div>
+            <div class="card">
+                <ul class="current-list">
+                    <li>
+                        <span class="number">1</span>
+                        <span>Углублением знаний в области автоматизации сетевых процессов.</span>
+                    </li>
+                    <li>
+                        <span class="number">2</span>
+                        <span>Изучением новых подходов к интеграционному тестированию сетевого ПО.</span>
+                    </li>
+                    <li>
+                        <span class="number">3</span>
+                        <span>Оптимизацией архитектуры корпоративных ЛВС.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Спасибо, что заглянули в мой профиль! Открыт к интересным проектам и сотрудничеству. ✨</p>
+            <div class="footer-links">
+                <a href="mailto:kobylin.timur@gmail.com">📧 Email</a>
+                <a href="https://t.me/kobylin_t" target="_blank" rel="noopener noreferrer">💬 Telegram</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Theme toggle
+        const toggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        // Check saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            html.classList.add('light');
+            toggle.textContent = '🌙';
+        }
+
+        toggle.addEventListener('click', () => {
+            html.classList.toggle('light');
+            const isLight = html.classList.contains('light');
+            toggle.textContent = isLight ? '🌙' : '☀️';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
+</body>
 </html>
